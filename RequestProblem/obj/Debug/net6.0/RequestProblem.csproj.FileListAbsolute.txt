@@ -121,3 +121,5 @@ D:\Users\cf303956\source\repos\HW_10\RequestProblem\RequestProblem\obj\Debug\net
 D:\Users\cf303956\source\repos\HW_10\RequestProblem\RequestProblem\obj\Debug\net6.0\RequestProblem.pdb
 D:\Users\cf303956\source\repos\HW_10\RequestProblem\RequestProblem\obj\Debug\net6.0\RequestProblem.genruntimeconfig.cache
 D:\Users\cf303956\source\repos\HW_10\RequestProblem\RequestProblem\obj\Debug\net6.0\ref\RequestProblem.dll
+D:\Users\cf303956\source\repos\HW_10\RequestProblem\RequestProblem\bin\Debug\net6.0\Autofac.dll
+D:\Users\cf303956\source\repos\HW_10\RequestProblem\RequestProblem\bin\Debug\net6.0\Autofac.Extensions.DependencyInjection.dll

@@ -1,42 +1,23 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using RequestProblem.Models;
+using RequestProblem.Repositories.GenericRepository;
 
 namespace RequestProblem.Repositories
 {
-    public class ProblemsRepository : IProblemsRepository
+    public class ProblemsRepository : GenericRepository<Problems>, IProblemsRepository
     {
         
         private readonly IConfiguration _configuration;
-        private readonly ProblemMgmtContext _problemMgmtContext;
+    
 
-        public ProblemsRepository(ProblemMgmtContext problemMgmtContext, IConfiguration configuration)
+        public ProblemsRepository(IConfiguration configuration) : base(configuration)
         {
-            _problemMgmtContext = problemMgmtContext;
-            _configuration = configuration;
         }
 
-        public IEnumerable<Problems> GetAllProblems()
-        {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value)) {
+     
 
-                var sqlCommand = string.Format(@"SELECT * FROM [Problems]");
-                return db.Query<Problems>(sqlCommand).ToList();
-            }
-               
-        }
-
-        public Problems GetByIdProblems(int id)
-        {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
-            {
-
-                var sqlCommand = string.Format(@"SELECT * FROM [Problems] WHERE Id = @Id");
-                return db.Query<Problems>(sqlCommand, new { Id = id }).FirstOrDefault();
-            }
-        }
-
-        public int AddProblems(Problems problems)
+        public override int AddProblems(Problems problems)
         {
             using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
             {
@@ -52,7 +33,7 @@ namespace RequestProblem.Repositories
             }
         }
 
-        public int UpdateProblems(Problems problems)
+        public override int UpdateProblems(Problems problems)
         {
             using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
             {
@@ -65,7 +46,7 @@ namespace RequestProblem.Repositories
             }
         }
 
-        public int DeleteProblems(int id)
+        public override int DeleteProblems(int id)
         {
             using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
             {

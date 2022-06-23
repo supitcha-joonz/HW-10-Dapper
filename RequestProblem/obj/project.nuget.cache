@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "tivkV4Z/fWRyoMa5zq/V3bTLOPrHXzSuWwsS5eg+u3v0NXtArt2aoXyKvnOvIWRna2mwxUT21DWY+PpJbH8x6A==",
+  "dgSpecHash": "fYO88VPXtsZHkg++IFXRYsqcMe7CZKW2CKHByTH6lkup2iANVvellgjDlql8OtyCDOXmd/w5Qr4sV3SR7lOofA==",
   "success": true,
   "projectFilePath": "D:\\Users\\cf303956\\source\\repos\\HW_10\\RequestProblem\\RequestProblem\\RequestProblem.csproj",
   "expectedPackageFiles": [
+    "D:\\Users\\cf303956\\.nuget\\packages\\autofac\\6.4.0\\autofac.6.4.0.nupkg.sha512",
+    "D:\\Users\\cf303956\\.nuget\\packages\\autofac.extensions.dependencyinjection\\8.0.0\\autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "D:\\Users\\cf303956\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "D:\\Users\\cf303956\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "D:\\Users\\cf303956\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
