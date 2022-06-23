@@ -4,11 +4,11 @@ namespace RequestProblem.Services
 {
     public interface IProblemsService
     {
-        IEnumerable<Problems> GetAllProblems();
+        IEnumerable<Problems> GetAll();
 
-        Problems GetByIdProblems(int id);
-        void AddProblems(Problems problems);
-        void UpdateProblems(Problems problems);
-        void DeleteProblems(int id);
+        Problems GetById(int id);
+        int Add(Problems problems);
+        int Update(Problems problems);
+        int Delete(int id);
     }
 }

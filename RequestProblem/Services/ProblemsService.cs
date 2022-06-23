@@ -12,31 +12,31 @@ namespace RequestProblem.Services
             _problemsRepository = problemsRepository;
         }
 
-        public IEnumerable<Problems> GetAllProblems()
+        public IEnumerable<Problems> GetAll()
         {
-            var problems = _problemsRepository.GetAllProblems();
+            var problems = _problemsRepository.GetAll();
             var resp = problems.OrderByDescending(m => m.ProblemName);
             return resp;
         }
 
-        public Problems GetByIdProblems(int id)
+        public Problems GetById(int id)
         {
-            return _problemsRepository.GetByIdProblems(id);
+            return _problemsRepository.GetById(id);
         }
 
-        public void AddProblems(Problems problems)
+        public int Add(Problems problems)
         {
-            _problemsRepository.AddProblems(problems);
+            return _problemsRepository.Add(problems);
         }
 
-        public void UpdateProblems(Problems problems)
+        public int Update(Problems problems)
         {
-            _problemsRepository.UpdateProblems(problems);
+            return _problemsRepository.Update(problems);
         }
 
-        public void DeleteProblems(int id)
+        public int Delete(int id)
         {
-            _problemsRepository.DeleteProblems(id);
+            return _problemsRepository.Delete(id);
         }
 
       

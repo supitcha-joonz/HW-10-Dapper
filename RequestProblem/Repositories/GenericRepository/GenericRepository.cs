@@ -17,7 +17,7 @@ namespace RequestProblem.Repositories.GenericRepository
             connectionStrings = _configuration.GetSection("ConnectionStrings:ConnectionString").Value;
         }
 
-        public IEnumerable<T> GetAllProblems()
+        public IEnumerable<T> GetAll()
         {
             using (var db = new SqlConnection(connectionStrings))
             {
@@ -28,20 +28,22 @@ namespace RequestProblem.Repositories.GenericRepository
             }
         }
 
-        public T GetByIdProblems(int id)
+        public T GetById(int id)
         {
             using (var db = new SqlConnection(connectionStrings))
             {
                 var className = typeof(T).Name;
                 var sqlCommand = $"SELECT * FROM {className} WHERE [Id] = @Id";
-                return db.Query<T>(sqlCommand, new { Id = id}).FirstOrDefault();
+                return db.Query<T>(sqlCommand, new { Id = id }).FirstOrDefault();
 
             }
         }
 
-        public abstract int AddProblems(T model);
-        public abstract int UpdateProblems(T model);
-        public abstract int DeleteProblems(int id);
+        
+
+        public abstract int Add(T model);
+        public abstract int Update(T model);
+        public abstract int Delete(int id);
 
     }
 }

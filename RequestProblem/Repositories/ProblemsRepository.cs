@@ -13,11 +13,12 @@ namespace RequestProblem.Repositories
 
         public ProblemsRepository(IConfiguration configuration) : base(configuration)
         {
+            _configuration = configuration;
         }
 
      
 
-        public override int AddProblems(Problems problems)
+        public override int Add(Problems problems)
         {
             using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
             {
@@ -33,7 +34,7 @@ namespace RequestProblem.Repositories
             }
         }
 
-        public override int UpdateProblems(Problems problems)
+        public override int Update(Problems problems)
         {
             using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
             {
@@ -46,7 +47,7 @@ namespace RequestProblem.Repositories
             }
         }
 
-        public override int DeleteProblems(int id)
+        public override int Delete(int id)
         {
             using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
             {

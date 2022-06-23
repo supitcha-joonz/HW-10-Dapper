@@ -17,34 +17,34 @@ namespace RequestProblem.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Problems> GetAllProblems()
+        public IEnumerable<Problems> GetAll()
         {
-            return _problemsService.GetAllProblems();
+            return _problemsService.GetAll();
         }
 
         [HttpGet("{id}")]
-        public Problems GetByIdProblems(int id)
+        public Problems GetById(int id)
         {
 
-            return _problemsService.GetByIdProblems(id);
+            return _problemsService.GetById(id);
         }
 
         [HttpPost]
-        public void AddProblems(Problems problems)
+        public int Add(Problems problems)
         {
-            _problemsService.AddProblems(problems); 
+            return _problemsService.Add(problems); 
         }
 
         [HttpPut("{id}")]
-        public void UpdateProblems(Problems problems)
+        public int Update(Problems problems)
         {
-            _problemsService.UpdateProblems(problems);
+            return _problemsService.Update(problems);
         }
 
         [HttpDelete("{id}")]
-        public void DeleteProblems(int id)
+        public int Delete(int id)
         {
-            _problemsService?.DeleteProblems(id);   
+            return _problemsService.Delete(id);   
         }
     }
 }

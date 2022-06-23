@@ -4,11 +4,11 @@ namespace RequestProblem.Repositories
 {
     public interface IProblemsRepository
     {
-        IEnumerable<Problems> GetAllProblems();
+        IEnumerable<Problems> GetAll();
 
-        Problems GetByIdProblems(int id);
-        int AddProblems(Problems problems);
-        int UpdateProblems(Problems problems);
-        int DeleteProblems(int id);
+        Problems GetById(int id);
+        int Add(Problems problems);
+        int Update(Problems problems);
+        int Delete(int id);
     }
 }

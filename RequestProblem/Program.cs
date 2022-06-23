@@ -31,17 +31,15 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>{
     var repositoryAssembly = typeof(ProblemsRepository).Assembly;    
     builder.RegisterAssemblyTypes(repositoryAssembly).Where(t => t.Name.EndsWith("Repository"))    
     .AsImplementedInterfaces()    
-    .SingleInstance();});
-
-
-
-builder.Services.AddTransient<IApplicationsRepository, ApplicationsRepository>();
-builder.Services.AddTransient<IApplicationsService, ApplicationsService>();
-
-builder.Services.AddDbContext<ProblemMgmtContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+    .SingleInstance();
 });
+
+
+
+
+
+
+
 
 var app = builder.Build();
 

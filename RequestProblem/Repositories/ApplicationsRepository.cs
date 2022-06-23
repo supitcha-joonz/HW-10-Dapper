@@ -1,48 +1,66 @@
-﻿using RequestProblem.Models;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using RequestProblem.Models;
+using RequestProblem.Repositories.GenericRepository;
 
 namespace RequestProblem.Repositories
 {
-    public class ApplicationsRepository : IApplicationsRepository
+    public class ApplicationsRepository : GenericRepository<Applications> , IApplicationsRepository
     {
-        private readonly ProblemMgmtContext _problemMgmtContext;
 
-        public ApplicationsRepository(ProblemMgmtContext problemMgmtContext)
+        private readonly IConfiguration _configuration;
+        public ApplicationsRepository(IConfiguration configuration) : base(configuration)
         {
-            _problemMgmtContext = problemMgmtContext;
-
+            _configuration = configuration;
         }
 
-        public IEnumerable<Applications> GetAllApplications()
+        public override int Add(Applications applications)
         {
-            return _problemMgmtContext.Applications.ToList();
+            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            {
+                var sqlCommand = string.Format(@"INSERT INTO [Applications]
+                                                                   ([ApplicationName]
+                                                                   ,[Description])
+                                                             VALUES
+                                                                   (@ApplicationName
+                                                                   ,@Description)");
+
+                return db.Execute(sqlCommand, ParameterMapping(applications));
+            }
         }
 
-        public Applications GetByIdApplications(int id)
+        public override int Update(Applications applications)
         {
-            return _problemMgmtContext.Applications.Find(id);
+            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            {
+                var sqlCommand = string.Format(@"UPDATE [Applications]
+                                                   SET [ApplicationName] = @ApplicationName
+                                                      ,[Description] = @Description
+                                                 WHERE [Id] = @Id");
+
+                return db.Execute(sqlCommand, ParameterMapping(applications));
+            }
         }
 
-        public void AddApplications(Applications applications)
+        public override int Delete(int id)
         {
-            _problemMgmtContext.Applications.Add(applications);
-            _problemMgmtContext.SaveChanges();
+            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            {
+                var sqlCommand = string.Format(@"DELETE FROM [Applications] WHERE [id] = @Id");
+                return db.Execute(sqlCommand, new { Id = id });
+            }
         }
 
-        public void UpdateApplications(Applications applications)
+      
+
+        private Object ParameterMapping(Applications applications)
         {
-            _problemMgmtContext.Entry(applications).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _problemMgmtContext.SaveChanges();
+            return new
+            {
+                Id = applications.Id,
+                ApplicationName = applications.ApplicationName,
+                Description = applications.Description
+            };
         }
-
-        public void DeleteApplications(int id)
-        {
-            var application = _problemMgmtContext.Applications.Find(id);
-            _problemMgmtContext.Applications.Remove(application);
-            _problemMgmtContext.SaveChanges();
-        }
-
-        
-
-        
     }
 }
