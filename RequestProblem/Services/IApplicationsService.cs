@@ -4,11 +4,11 @@ namespace RequestProblem.Services
 {
     public interface IApplicationsService
     {
-        IEnumerable<Applications> GetAll();
+        Task<IEnumerable<Applications>> GetAll();
 
-        Applications GetById(int id);
-        int Add(Applications applications);
-        int Update(Applications applications);
-        int Delete(int id);
+        Task<Applications> GetById(int id);
+        Task<bool> Add(Applications applications);
+        Task<bool> Update(Applications applications);
+        Task<bool> Delete(int id);
     }
 }

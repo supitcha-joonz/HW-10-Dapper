@@ -17,34 +17,105 @@ namespace RequestProblem.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Problems> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return _problemsService.GetAll();
+            try
+            {
+                var res = await _problemsService.GetAll();
+                return Ok(new { isSuccess = true, data = res });
+                //return await _problemsService.GetAll();
+            }
+            catch (Exception ex) {
+                return new JsonResult(new {
+                    isSuccess = false,
+                    StatusCode = 500,
+                    message = ex.Message
+                
+                });  
+            }
+            
         }
 
         [HttpGet("{id}")]
-        public Problems GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
+            try {
+                var res = await _problemsService.GetById(id);
+                return Ok(new { isSuccess = true, data = res });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new
+                {
+                    isSuccess = false,
+                    StatusCode = 500,
+                    message = ex.Message
 
-            return _problemsService.GetById(id);
+                });
+            }
+
+
         }
 
         [HttpPost]
-        public int Add(Problems problems)
+        public async Task<IActionResult> Add(Problems problems)
         {
-            return _problemsService.Add(problems); 
+            try {
+                var res = await _problemsService.Add(problems);
+                return Ok(new { isSuccess = true, data = res });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new
+                {
+                    isSuccess = false,
+                    StatusCode = 500,
+                    message = ex.Message
+
+                });
+            }
+
         }
 
         [HttpPut("{id}")]
-        public int Update(Problems problems)
+        public async Task<IActionResult> Update(Problems problems)
         {
-            return _problemsService.Update(problems);
+            try
+            {
+                var res = await _problemsService.Update(problems);
+                return Ok(new { isSuccess = true, data = res });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new
+                {
+                    isSuccess = false,
+                    StatusCode = 500,
+                    message = ex.Message
+
+                });
+            }
+
         }
 
         [HttpDelete("{id}")]
-        public int Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return _problemsService.Delete(id);   
+            try {
+                var res = await _problemsService.Delete(id);
+                return Ok(new { isSuccess = true, data = res });
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new
+                {
+                    isSuccess = false,
+                    StatusCode = 500,
+                    message = ex.Message
+
+                });
+            }
+
         }
     }
 }

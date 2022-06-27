@@ -11,12 +11,12 @@ namespace RequestProblem.Repositories
         private readonly IConfiguration _configuration;
         public ApplicationsRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
+            
         }
 
-        public override int Add(Applications applications)
+        public override async Task<int> Add(Applications applications)
         {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            using (var db = new SqlConnection(connectionStrings))
             {
                 var sqlCommand = string.Format(@"INSERT INTO [Applications]
                                                                    ([ApplicationName]
@@ -25,29 +25,29 @@ namespace RequestProblem.Repositories
                                                                    (@ApplicationName
                                                                    ,@Description)");
 
-                return db.Execute(sqlCommand, ParameterMapping(applications));
+                return await db.ExecuteAsync(sqlCommand, ParameterMapping(applications));
             }
         }
 
-        public override int Update(Applications applications)
+        public override async Task<int> Update(Applications applications)
         {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            using (var db = new SqlConnection(connectionStrings))
             {
                 var sqlCommand = string.Format(@"UPDATE [Applications]
                                                    SET [ApplicationName] = @ApplicationName
                                                       ,[Description] = @Description
                                                  WHERE [Id] = @Id");
 
-                return db.Execute(sqlCommand, ParameterMapping(applications));
+                return await db.ExecuteAsync(sqlCommand, ParameterMapping(applications));
             }
         }
 
-        public override int Delete(int id)
+        public override async Task<int> Delete(int id)
         {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            using (var db = new SqlConnection(connectionStrings))
             {
                 var sqlCommand = string.Format(@"DELETE FROM [Applications] WHERE [id] = @Id");
-                return db.Execute(sqlCommand, new { Id = id });
+                return await db.ExecuteAsync(sqlCommand, new { Id = id });
             }
         }
 

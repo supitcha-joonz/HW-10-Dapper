@@ -12,31 +12,47 @@ namespace RequestProblem.Services
             _problemsRepository = problemsRepository;
         }
 
-        public IEnumerable<Problems> GetAll()
+        public async Task<IEnumerable<Problems>> GetAll()
         {
-            var problems = _problemsRepository.GetAll();
+            var problems = await _problemsRepository.GetAll();
             var resp = problems.OrderByDescending(m => m.ProblemName);
             return resp;
         }
 
-        public Problems GetById(int id)
+        public async Task<Problems> GetById(int id)
         {
-            return _problemsRepository.GetById(id);
+            return await _problemsRepository.GetById(id);
         }
 
-        public int Add(Problems problems)
+        public async Task<bool> Add(Problems problems)
         {
-            return _problemsRepository.Add(problems);
+            //validate dupicate
+            var problemList = await _problemsRepository.GetAll();
+            var isDupicate = problemList.Where(m => m.ProblemName == problems.ProblemName);
+            if (isDupicate.Count() > 0) {
+                throw new Exception("Error Problem is Dupicate");
+            }
+            return await _problemsRepository.Add(problems) > 0;
         }
 
-        public int Update(Problems problems)
+        public async Task<bool> Update(Problems problems)
         {
-            return _problemsRepository.Update(problems);
+            var problemList = await _problemsRepository.GetAll();
+            var isDupicate = problemList.Where((m) => m.ProblemName == problems.ProblemName && m.Id != problems.Id);
+            if (isDupicate.Count() > 0)
+            {
+                throw new Exception("Error Problem is Dupicate");
+            }
+            return await _problemsRepository.Update(problems) > 0;
         }
 
-        public int Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _problemsRepository.Delete(id);
+            var problem = await _problemsRepository.GetById(id);
+            if (problem == null) {
+                throw new Exception("Error Problem not exist");
+            }
+            return await _problemsRepository.Delete(id) > 0;
         }
 
       

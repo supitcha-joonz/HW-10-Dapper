@@ -13,14 +13,13 @@ namespace RequestProblem.Repositories
 
         public ProblemsRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
         }
 
      
 
-        public override int Add(Problems problems)
+        public override async Task<int> Add(Problems problems)
         {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            using (var db = new SqlConnection(connectionStrings))
             {
                 var sqlCommand = string.Format(@"INSERT INTO [Problems]
                                                            ([ProblemName]
@@ -30,29 +29,29 @@ namespace RequestProblem.Repositories
                                                            (@ProblemName
                                                            ,@Description
                                                            ,@ApplicationId)");
-                return db.Execute(sqlCommand, ParameterMapping(problems));
+                return await db.ExecuteAsync(sqlCommand, ParameterMapping(problems));
             }
         }
 
-        public override int Update(Problems problems)
+        public override async Task<int> Update(Problems problems)
         {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            using (var db = new SqlConnection(connectionStrings))
             {
                 var sqlCommand = string.Format(@"UPDATE [Problems]
                                                SET [ProblemName] = @ProblemName
                                                   ,[Description] = @Description
                                                   ,[ApplicationId] = @ApplicationId
                                              WHERE [Id] = @Id");
-                return db.Execute(sqlCommand, ParameterMapping(problems));
+                return await db.ExecuteAsync(sqlCommand, ParameterMapping(problems));
             }
         }
 
-        public override int Delete(int id)
+        public override async Task<int> Delete(int id)
         {
-            using (var db = new SqlConnection(_configuration.GetSection("ConnectionStrings:ConnectionString").Value))
+            using (var db = new SqlConnection(connectionStrings))
             {
                 var sqlCommand = string.Format(@"DELETE FROM [Problems] WHERE [id] = @Id");
-                return db.Execute(sqlCommand, new { Id = id});
+                return await db.ExecuteAsync(sqlCommand, new { Id = id});
             }
         }
 
